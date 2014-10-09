@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Kickr</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/kickr.css" />
+  </head>
+  <body class="container">
+    <!--[if IE]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
+
+    <header class="page-header text-center">
+      <h1>Kickr</h1>
+    </header>
+
+    <main>
+      <p class="lead text-center">Join a table and stand by. You will be notified when 4 players are ready to play.</p>
+      <ul id="tables"></ul>
+    </main>
+
+    <script id="table-template" type="text/x-handlebars-template">
+      <li class="table panel panel-{{#if ready}}success{{else}}{{#if joined}}warning{{else}}default{{/if}}{{/if}}">
+        <div class="panel-heading">
+          {{#if joined}}
+          <button type="button" class="leave-table pull-right btn btn-xs btn-default" data-table="{{id}}">
+            <span class="glyphicon glyphicon-remove-circle"></span>
+            Leave table
+          </button>
+          {{else}}
+            {{#if joinable}}
+            <button type="button" class="join-table pull-right btn btn-xs btn-warning" data-table="{{id}}">
+              <span class="glyphicon glyphicon-ok-circle"></span>
+              Join table
+            </button>
+            {{/if}}
+          {{/if}}
+          <h4 class="panel-title">{{label}}</h4>
+        </div>
+        <div class="panel-body">
+          <div class="progress">
+            <div class="progress-bar progress-bar-{{#if ready}}success{{else}}warning{{/if}}" style="width: {{fill_level}}%">{{players}}</div>
+          </div>
+        </div>
+      </li>
+    </script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/assets/kickr.js"></script>
+  </body>
+</html>

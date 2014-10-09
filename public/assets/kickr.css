@@ -1,0 +1,8 @@
+#tables {
+  list-style: none;
+  padding: 0;
+}
+
+.table .progress {
+  margin-bottom: 0;
+}
