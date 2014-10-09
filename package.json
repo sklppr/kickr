@@ -1,0 +1,27 @@
+{
+  "name": "Kickr",
+  "version": "0.0.0",
+  "description": "A great way to start a game of Kicker.",
+  "private": true,
+  "main": "app/main.js",
+  "dependencies": {
+    "express": "^4.8.7",
+    "socket.io": "^1.1.0"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.8.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sklppr/kickr.git"
+  },
+  "author": "Sebastian Klepper <sk@sebastianklepper.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sklppr/kickr/issues"
+  },
+  "homepage": "https://github.com/sklppr/kickr"
+}
