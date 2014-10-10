@@ -11,6 +11,9 @@
   "devDependencies": {
     "coffee-script": "^1.8.0"
   },
+  "engines": {
+    "node": "0.10.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

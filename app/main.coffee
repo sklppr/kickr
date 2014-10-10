@@ -45,4 +45,4 @@ io.on "connect", (socket) ->
     io.emit("data", data())
 
 # Run server.
-server.listen(3000)
+server.listen(process.env.PORT || 3000)
