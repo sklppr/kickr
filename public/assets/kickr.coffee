@@ -1,6 +1,17 @@
 # Create socket connection.
 socket = io()
 
+# Wrapper for Notification API.
+Notify =
+  supported: -> window.hasOwnProperty("Notification")
+  permitted: -> Notification.permission == "granted"
+  request: -> Notification.requestPermission() if @supported() && !@permitted()
+  show: (title, body) ->
+    if @supported() && @permitted()
+      new Notification(title, body: body)
+    else
+      alert(body)
+
 # Get elements and templates.
 tables = $("#tables")
 template = Handlebars.compile($("#tables-template").html())
@@ -20,11 +31,13 @@ socket.on "data", (data) ->
 
 # Show notification when ready.
 socket.on "ready", ->
-  alert("Table is ready!")
+  Notify.show("Kickr", "Table is ready!")
 
 # Emit event to join a table.
 tables.on "click", ".join-table", (event) ->
   socket.emit("join", $(this).data("table"))
+  # Request permission for notifications.
+  Notify.request()
 
 # Emit event to leave a table.
 tables.on "click", ".leave-table", (event) ->
