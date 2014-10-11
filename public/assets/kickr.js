@@ -38,6 +38,10 @@
     return _results;
   });
 
+  socket.on("ready", function() {
+    return alert("Table is ready!");
+  });
+
   tables.on("click", ".join-table", function(event) {
     return socket.emit("join", $(this).data("table"));
   });

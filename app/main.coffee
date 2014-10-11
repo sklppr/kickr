@@ -14,34 +14,51 @@ tables = [
   { id: "og1", label: "1. OG" }
 ]
 
+# Returns array of player IDs in a room.
+player_ids = (room) -> Object.keys(io.sockets.adapter.rooms[room] ? {})
+
+# Returns number of players in a room.
+player_count = (room) -> player_ids(room).length
+
+# Returns fill level of room.
+fill_level = (room) -> 100 * player_count(room) / 4
+
+# Checks if room is full.
+is_full = (room) -> player_count(room) == 4
+
 # Updates table data based on room status and returns it.
 data = ->
   for table in tables
-    table.player_ids = Object.keys(io.sockets.adapter.rooms[table.id] ? {})
-    table.player_count = table.player_ids.length
-    table.fill_level = 100 * table.player_count / 4
+    table.player_ids = player_ids(table.id)
+    table.player_count = player_count(table.id)
+    table.fill_level = fill_level(table.id)
   tables
 
-# Handle connecting clients.
+# Handle connecting players.
 io.on "connect", (socket) ->
 
-  # Send socket ID and table data to new client.
+  # Send socket ID and table data to new player.
   socket.emit("id", socket.id)
   socket.emit("data", data())
 
-  # Handle client joining a table.
-  socket.on "join", (id) ->
-    socket.join(id)
+  # Handle player joining a table.
+  socket.on "join", (room) ->
+    # Only join room if not full.
+    unless is_full(room)
+      socket.join(room)
+      io.emit("data", data())
+      # Notify players if ready.
+      io.to(room).emit("ready") if is_full(room)
+    
+
+  # Handle player leaving a table.
+  socket.on "leave", (room) ->
+    socket.leave(room)
     io.emit("data", data())
 
-  # Handle client leaving a table.
-  socket.on "leave", (id) ->
-    socket.leave(id)
-    io.emit("data", data())
-
-  # Handle client disconnecting.
+  # Handle player disconnecting.
   socket.on "disconnect", () ->
-    # Client will automatically leave all rooms.
+    # Player will automatically leave all rooms.
     io.emit("data", data())
 
 # Run server.
