@@ -7,16 +7,14 @@
 
   tables = $("#tables");
 
-  template = Handlebars.compile($("#table-template").html());
+  template = Handlebars.compile($("#tables-template").html());
 
   socket.on("id", function(id) {
     return socket.id = id;
   });
 
   socket.on("data", function(data) {
-    var table, _i, _len, _ref, _results;
-    tables.empty();
-    _results = [];
+    var table, _i, _len, _ref;
     for (_i = 0, _len = data.length; _i < _len; _i++) {
       table = data[_i];
       table.joined = (_ref = socket.id, __indexOf.call(table.player_ids, _ref) >= 0);
@@ -33,9 +31,8 @@
             return "" + table.player_count + " players";
         }
       })();
-      _results.push(tables.append(template(table)));
     }
-    return _results;
+    return tables.html(template(data));
   });
 
   socket.on("ready", function() {

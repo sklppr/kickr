@@ -3,14 +3,13 @@ socket = io()
 
 # Get elements and templates.
 tables = $("#tables")
-template = Handlebars.compile($("#table-template").html())
+template = Handlebars.compile($("#tables-template").html())
 
 # Store socket ID.
 socket.on "id", (id) -> socket.id = id
 
 # Render tables after receiving data.
 socket.on "data", (data) ->
-  tables.empty()
   for table in data
     table.joined = socket.id in table.player_ids
     table.full = table.fill_level == 100
@@ -20,7 +19,7 @@ socket.on "data", (data) ->
       when 0 then ""
       when 1 then "1 player"
       else "#{table.player_count} players"
-    tables.append(template(table))
+  tables.html(template(data))
 
 # Show notification when ready.
 socket.on "ready", ->
