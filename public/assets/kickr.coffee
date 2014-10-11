@@ -5,13 +5,10 @@ socket = io()
 tables = $("#tables")
 template = Handlebars.compile($("#tables-template").html())
 
-# Store socket ID.
-socket.on "id", (id) -> socket.id = id
-
 # Render tables after receiving data.
 socket.on "data", (data) ->
   for table in data
-    table.joined = socket.id in table.player_ids
+    table.joined = socket.io.engine.id in table.player_ids
     table.full = table.fill_level == 100
     table.ready = table.full && table.joined
     table.joinable = !table.full && !table.joined

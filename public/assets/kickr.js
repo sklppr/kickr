@@ -9,15 +9,11 @@
 
   template = Handlebars.compile($("#tables-template").html());
 
-  socket.on("id", function(id) {
-    return socket.id = id;
-  });
-
   socket.on("data", function(data) {
     var table, _i, _len, _ref;
     for (_i = 0, _len = data.length; _i < _len; _i++) {
       table = data[_i];
-      table.joined = (_ref = socket.id, __indexOf.call(table.player_ids, _ref) >= 0);
+      table.joined = (_ref = socket.io.engine.id, __indexOf.call(table.player_ids, _ref) >= 0);
       table.full = table.fill_level === 100;
       table.ready = table.full && table.joined;
       table.joinable = !table.full && !table.joined;
