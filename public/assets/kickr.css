@@ -1,3 +1,14 @@
+.page-header {
+  margin-top: 20px;
+}
+
+#title {
+  color: #000;
+  display: inline-block;
+  padding-left: 1.2em;
+  background: url(/assets/icon.svg) no-repeat 0 50% / auto 80%;
+}
+
 #tables {
   list-style: none;
   padding: 0;
