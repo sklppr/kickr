@@ -57,7 +57,6 @@
   };
 
   io.on("connect", function(socket) {
-    socket.emit("id", socket.id);
     socket.emit("data", data());
     socket.on("join", function(room) {
       if (!is_full(room)) {

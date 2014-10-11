@@ -37,8 +37,7 @@ data = ->
 # Handle connecting players.
 io.on "connect", (socket) ->
 
-  # Send socket ID and table data to new player.
-  socket.emit("id", socket.id)
+  # Send table data to new player.
   socket.emit("data", data())
 
   # Handle player joining a table.
@@ -49,7 +48,6 @@ io.on "connect", (socket) ->
       io.emit("data", data())
       # Notify players if ready.
       io.to(room).emit("ready") if is_full(room)
-    
 
   # Handle player leaving a table.
   socket.on "leave", (room) ->
