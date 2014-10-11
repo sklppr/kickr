@@ -8,9 +8,8 @@ template = Handlebars.compile($("#table-template").html())
 # Store socket ID.
 socket.on "id", (id) -> socket.id = id
 
-# Handle data coming in.
+# Render tables after receiving data.
 socket.on "data", (data) ->
-  # Render tables.
   tables.empty()
   for table in data
     table.joined = socket.id in table.player_ids
@@ -22,6 +21,10 @@ socket.on "data", (data) ->
       when 1 then "1 player"
       else "#{table.player_count} players"
     tables.append(template(table))
+
+# Show notification when ready.
+socket.on "ready", ->
+  alert("Table is ready!")
 
 # Emit event to join a table.
 tables.on "click", ".join-table", (event) ->
