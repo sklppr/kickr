@@ -20,7 +20,8 @@
       <ul id="tables"></ul>
     </main>
 
-    <script id="table-template" type="text/x-handlebars-template">
+    <script id="tables-template" type="text/x-handlebars-template">
+    {{#each this}}
       <li class="table panel panel-{{#if ready}}success{{else}}{{#if joined}}warning{{else}}default{{/if}}{{/if}}">
         <div class="panel-heading">
           {{#if joined}}
@@ -44,6 +45,7 @@
           </div>
         </div>
       </li>
+    {{/each}}
     </script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
