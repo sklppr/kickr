@@ -6,11 +6,11 @@ Notify =
   supported: -> window.hasOwnProperty("Notification")
   permitted: -> Notification.permission == "granted"
   request: -> Notification.requestPermission() if @supported() && !@permitted()
-  show: (title, body) ->
-    if @supported() && @permitted()
-      new Notification(title, body: body)
+  show: (title, options) ->
+    if !@supported() && @permitted()
+      new Notification(title, options)
     else
-      alert(body)
+      alert(options.body || title)
 
 # Get elements and templates.
 tables = $("#tables")
@@ -31,7 +31,7 @@ socket.on "data", (data) ->
 
 # Show notification when ready.
 socket.on "ready", (name) ->
-  Notify.show("Kickr", "Table #{name} is ready!")
+  Notify.show("Kickr", body: "Table #{name} is ready!", icon: "/assets/notification-ready.png")
 
 # Emit event to join a table.
 tables.on "click", ".join-table", (event) ->

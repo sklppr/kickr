@@ -17,13 +17,11 @@
         return Notification.requestPermission();
       }
     },
-    show: function(title, body) {
-      if (this.supported() && this.permitted()) {
-        return new Notification(title, {
-          body: body
-        });
+    show: function(title, options) {
+      if (!this.supported() && this.permitted()) {
+        return new Notification(title, options);
       } else {
-        return alert(body);
+        return alert(options.body || title);
       }
     }
   };
@@ -55,7 +53,10 @@
   });
 
   socket.on("ready", function(name) {
-    return Notify.show("Kickr", "Table " + name + " is ready!");
+    return Notify.show("Kickr", {
+      body: "Table " + name + " is ready!",
+      icon: "/assets/notification-ready.png"
+    });
   });
 
   tables.on("click", ".join-table", function(event) {
