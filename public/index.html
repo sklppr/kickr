@@ -37,11 +37,11 @@
             </button>
             {{/if}}
           {{/if}}
-          <h4 class="panel-title">{{label}}</h4>
+          <h4 class="panel-title">{{name}}</h4>
         </div>
         <div class="panel-body">
           <div class="progress">
-            <div class="progress-bar progress-bar-{{#if ready}}success{{else}}warning{{/if}}" style="width: {{fill_level}}%">{{players}}</div>
+            <div class="progress-bar progress-bar-{{#if ready}}success{{else}}warning{{/if}}" style="width: {{percentage}}%">{{players}}</div>
           </div>
         </div>
       </li>

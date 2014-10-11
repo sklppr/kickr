@@ -16,22 +16,22 @@ Notify =
 tables = $("#tables")
 template = Handlebars.compile($("#tables-template").html())
 
-# Render tables after receiving data.
+# After receiving data, generate additional display data and render tables.
 socket.on "data", (data) ->
   for table in data
-    table.joined = socket.io.engine.id in table.player_ids
-    table.full = table.fill_level == 100
-    table.ready = table.full && table.joined
+    table.joined = socket.io.engine.id in table.players
     table.joinable = !table.full && !table.joined
-    table.players = switch table.player_count
+    table.ready = table.full && table.joined
+    table.percentage = 100 * table.players.length / 4
+    table.players = switch table.players.length
       when 0 then ""
       when 1 then "1 player"
-      else "#{table.player_count} players"
+      else "#{table.players.length} players"
   tables.html(template(data))
 
 # Show notification when ready.
-socket.on "ready", ->
-  Notify.show("Kickr", "Table is ready!")
+socket.on "ready", (name) ->
+  Notify.show("Kickr", "Table #{name} is ready!")
 
 # Emit event to join a table.
 tables.on "click", ".join-table", (event) ->

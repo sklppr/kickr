@@ -36,26 +36,26 @@
     var table, _i, _len, _ref;
     for (_i = 0, _len = data.length; _i < _len; _i++) {
       table = data[_i];
-      table.joined = (_ref = socket.io.engine.id, __indexOf.call(table.player_ids, _ref) >= 0);
-      table.full = table.fill_level === 100;
-      table.ready = table.full && table.joined;
+      table.joined = (_ref = socket.io.engine.id, __indexOf.call(table.players, _ref) >= 0);
       table.joinable = !table.full && !table.joined;
+      table.ready = table.full && table.joined;
+      table.percentage = 100 * table.players.length / 4;
       table.players = (function() {
-        switch (table.player_count) {
+        switch (table.players.length) {
           case 0:
             return "";
           case 1:
             return "1 player";
           default:
-            return "" + table.player_count + " players";
+            return "" + table.players.length + " players";
         }
       })();
     }
     return tables.html(template(data));
   });
 
-  socket.on("ready", function() {
-    return Notify.show("Kickr", "Table is ready!");
+  socket.on("ready", function(name) {
+    return Notify.show("Kickr", "Table " + name + " is ready!");
   });
 
   tables.on("click", ".join-table", function(event) {

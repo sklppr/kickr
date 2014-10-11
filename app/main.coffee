@@ -6,33 +6,20 @@ io = require("socket.io")(server)
 # Serve static assets from public folder.
 app.use(express.static("#{__dirname}/../public"))
 
-# Tables with IDs and labels. Players will join rooms with these IDs.
-tables = [
-  { id: "og4", label: "4. OG" },
-  { id: "og3", label: "3. OG" },
-  { id: "og2", label: "2. OG" },
-  { id: "og1", label: "1. OG" }
-]
+# Wrapper for table data.
+class Table
+  id: null
+  name: null
+  constructor: (@name, @id) ->
+  players: -> Object.keys(io.sockets.adapter.rooms[@id] ? {})
+  full: -> @players().length == 4
+  data: -> id: @id, name: @name, players: @players(), full: @full()
 
-# Returns array of player IDs in a room.
-player_ids = (room) -> Object.keys(io.sockets.adapter.rooms[room] ? {})
+# Generate tables. Players will join corresponding rooms.
+tables = (process.env.TABLES?.split(",") || [ 1, 2, 3 ]).map (name, id) -> new Table(name, id)
 
-# Returns number of players in a room.
-player_count = (room) -> player_ids(room).length
-
-# Returns fill level of room.
-fill_level = (room) -> 100 * player_count(room) / 4
-
-# Checks if room is full.
-is_full = (room) -> player_count(room) == 4
-
-# Updates table data based on room status and returns it.
-data = ->
-  for table in tables
-    table.player_ids = player_ids(table.id)
-    table.player_count = player_count(table.id)
-    table.fill_level = fill_level(table.id)
-  tables
+# Collects table data.
+data = -> table.data() for table in tables
 
 # Handle connecting players.
 io.on "connect", (socket) ->
@@ -41,17 +28,17 @@ io.on "connect", (socket) ->
   socket.emit("data", data())
 
   # Handle player joining a table.
-  socket.on "join", (room) ->
+  socket.on "join", (id) ->
     # Only join room if not full.
-    unless is_full(room)
-      socket.join(room)
+    unless tables[id].full()
+      socket.join(id)
       io.emit("data", data())
-      # Notify players if ready.
-      io.to(room).emit("ready") if is_full(room)
+      # If room is full now, notify players that table is ready.
+      io.to(id).emit("ready", tables[id].name) if tables[id].full()
 
   # Handle player leaving a table.
-  socket.on "leave", (room) ->
-    socket.leave(room)
+  socket.on "leave", (id) ->
+    socket.leave(id)
     io.emit("data", data())
 
   # Handle player disconnecting.
