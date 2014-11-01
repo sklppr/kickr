@@ -1,7 +1,7 @@
 {
   "name": "Kickr",
-  "version": "0.0.0",
-  "description": "A great way to start a game of Kicker.",
+  "version": "1.0.0",
+  "description": "An easy way to start a game of kicker",
   "private": true,
   "main": "app/main.coffee",
   "dependencies": {
