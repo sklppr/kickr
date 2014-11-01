@@ -1,2 +1,6 @@
 # Node.js
 /node_modules
+
+# CoffeeScript
+/app/main.js
+/public/assets/kickr.js

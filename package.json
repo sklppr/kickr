@@ -3,19 +3,18 @@
   "version": "0.0.0",
   "description": "A great way to start a game of Kicker.",
   "private": true,
-  "main": "app/main.js",
+  "main": "app/main.coffee",
   "dependencies": {
+    "coffee-script": "^1.8.0",
     "express": "^4.8.7",
     "socket.io": "^1.1.0"
-  },
-  "devDependencies": {
-    "coffee-script": "^1.8.0"
   },
   "engines": {
     "node": "0.10.x"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prestart": "./node_modules/coffee-script/bin/coffee --compile public/assets/kickr.coffee",
+    "start": "./node_modules/coffee-script/bin/coffee app/main.coffee"
   },
   "repository": {
     "type": "git",
