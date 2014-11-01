@@ -18,4 +18,6 @@ Example:
 
 Kickr is also ready to be deployed to **Heroku**.
 
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/sklppr/kickr)
+
 Icon “Foosball” designed by [Joe Harrison](http://www.thenounproject.com/joe_harrison) from the [Noun Project](http://www.thenounproject.com).
