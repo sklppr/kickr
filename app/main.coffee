@@ -16,7 +16,7 @@ class Table
   data: -> id: @id, name: @name, players: @players(), full: @full()
 
 # Generate tables. Players will join corresponding rooms.
-tables = (process.env.TABLES?.split(",") || [ 1, 2, 3 ]).map (name, id) -> new Table(name, id)
+tables = (process.env.KICKR_TABLES?.split(",") || [ 1, 2, 3 ]).map (name, id) -> new Table(name, id)
 
 # Collects table data.
 data = -> table.data() for table in tables
