@@ -17,3 +17,7 @@
 .table .progress {
   margin-bottom: 0;
 }
+
+.page-footer a {
+  color: #444;
+}
