@@ -4,6 +4,8 @@ Kickr allows players to arrange a match of “[kicker](http://en.wikipedia.org/w
 
 When four players have joined a table, all of them will receive a notification. When available, the browser’s [notification API](http://www.w3.org/TR/notifications/) will be used, otherwise a simple alert will be triggered.
 
+[Try it out live!](https://kickr-sample.herokuapp.com)
+
 ## How to use
 
 1. Install [Node.js](http://nodejs.org), then clone the repository and install dependencies.
