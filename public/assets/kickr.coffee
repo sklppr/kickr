@@ -34,7 +34,7 @@ $ ->
 
   # Show notification when ready.
   socket.on "ready", (name) ->
-    Notify.show("Kickr", body: "Table #{name} is ready!", icon: "/assets/notification-ready.png")
+    Notify.show("Kickr", body: "#{name} is ready!", icon: "/assets/notification-ready.png")
 
   # Emit event to join a table.
   tables.on "click", ".join-table", (event) ->
