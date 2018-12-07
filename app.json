@@ -2,6 +2,6 @@
   "name": "Kickr",
   "description": "An easy way to start a game of kicker",
   "repository": "https://github.com/sklppr/kickr",
-  "logo": "https://cdn.rawgit.com/sklppr/kickr/master/public/assets/icon.svg",
+  "logo": "https://cdn.jsdelivr.net/gh/sklppr/kickr/public/assets/icon.svg",
   "keywords": ["node", "express", "socket.io"]
 }
